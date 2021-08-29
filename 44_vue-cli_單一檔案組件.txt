@@ -18,8 +18,10 @@
     *** terminal ==========================> 選擇 " command prompt " ***
     指令: npm i -g vue-cli      (讓 npm 幫你從雲端下載並安裝 vue-cli) ====> vue-cli@2.9.6
     指令: vue                   (看看 vue 有哪些指令可以用)
-    指令: vue list              (看看 vue 有哪些 template 可以用)
+    指令: vue list              (看看 vue 有哪些 template 可以用) ==> https://github.com/vuejs-templates
     指令: vue init webpack-simple vue-lessons  (vue init webpack-simple 專案名稱)        
+    or 指令: vue init webpack vue-lessons      (vue init webpack 專案名稱) 
+
     上述都正確之後，終端機會要求以下指令: 
         cd vue-lessons
         npm install
@@ -45,7 +47,13 @@
 
     安裝 插件 VScode => Vetur ( v0.34.1 Pine Wu )
 
+    *** Project Structure :
+        http://vuejs-templates.github.io/webpack/
+
 ---------------------------------------------------------------------------------
+Project :   ***  src_TodoList  ***
+Project :   ***  src_TodoList  ***
+Project :   ***  src_TodoList  ***
 .vue 檔案裡 有3個區塊
 
 <template> HTML DOM template </template>
