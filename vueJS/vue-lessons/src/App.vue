@@ -1,46 +1,63 @@
-<script>
-import TodoInput from './TodoInput'
-import TodoItem from './TodoItem'
+    <script>
+            // 必須先引用 'vue' , 再引用 'vue-router'
+            import Vue from 'vue'
+            import VueRouter from 'vue-router'
 
-export default {
-    components: {
-        TodoInput,
-        TodoItem,
-    },
-    data(){
-        return {
-            tasks: [],
-        };
-    },
-    methods: {
-        addTask(item){
-            this.tasks.push(item);
-        },
-        removeTask(index){
-            this.tasks.splice(index,1);
-        },
-    },
-}
-</script>
-<template>
-    <div>
-        <todo-input @abc="addTask"></todo-input>
-            <!--
-                下層組件(todo-input) 發出自訂事件，
-                上層組件(todo-list) 用『v-on:自訂事件』或『@自訂事件』接收
-            -->
+            import About from './About'
+            import Products from './Products'
 
-        <ol>
-            <!-- <todo-item v-for="task in tasks" v-bind:xyz="task"/> -->
-            <todo-item v-for="(task,index) in tasks"    
-                       v-bind:xyz="task" 
-                       @click.native="removeTask(index)" />
-                <!--
-                    上層組件(todo-list) 發出自訂屬性 (『v-bind:自訂屬性』或『：自訂屬性』)
-                    下層組件(todo-item) 用props接收
-                     @click.native 原生事件, index來自 v-for="(task,index) in tasks"
-                    *** 在組件上 <todo-item> 使用click事件 所以要加上原生事件 ***
-                -->
-        </ol>
-    </div>
-</template>
+            import AboutHome from './AboutHome'
+            import AboutYou from './AboutYou'
+            import AboutMe from './AboutMe'
+
+            Vue.use(VueRouter)
+
+            export default {
+                router: new VueRouter({    //  router: new VueRouter({}), => """是逗號喔"""
+                        mode: 'history',       //hash by default (路徑預設有 '#')
+                        routes: [  //要在哪裡 render 這個組件？
+                            //設定固定路徑: http://localhost:8080/about 和 http://localhost:8080/products
+                            //並顯示固定的組件: component:About 和 component:Products
+                        // {path: '/about', component: About},
+                        // routes: [] 預設陣列 , 之內 放"物件" ===>  routes: [ {...[]} , {...[]} ]
+                        {   
+                            path: '/about',  
+                            component: About,
+                            children: [
+                                {path: '', component: AboutHome},
+                                {path: 'you', component: AboutYou},
+                                {path: 'me', component: AboutMe},
+                                // path: ''    , 表示路徑 => /about (本頁)
+                                // path: 'you' , 表示路徑 => /about/you
+                                // path: 'me'  , 表示路徑 => /about/me
+                            ],
+                            
+                        },
+
+
+                        {
+                            path: '/products/:item?',
+                            component: Products
+                            // :item?(自訂名稱) , 代表後面還有東西 , ? 代表後面路徑可有可無
+                        },
+
+                    ],
+                }),
+            
+            }
+    </script>
+
+    <template>
+        <div>
+            <p>
+                <!-- 類似 <a href=""></a> -->
+                <!-- to="/about" , to="/products"  連結的路徑 -->
+                <router-link to="/about"> About </router-link> | <router-link to="/products"> Products </router-link>
+                
+            </p>
+            <hr>
+            <h1>12345 test</h1>
+            <!-- 指定網頁內容,要出現的位子 -->
+            <router-view></router-view> 
+        </div>
+    <!-- </template> -->
